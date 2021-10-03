@@ -270,7 +270,6 @@ impl pallet_sudo::Config for Runtime {
 	type Call = Call;
 }
 
-/// Configure the pallet-qf in pallets/quadratic-funding.
 parameter_types! {
 	// pow(10,12) => Unit, for easy fee control, we use pow(10,9)
     pub const VoteUnit: u128 = 1000000000;
@@ -281,22 +280,24 @@ parameter_types! {
 	pub const QuadraticFundingPalletId: PalletId = PalletId(*b"py/quafd");
 	pub const NameMinLength: usize = 3;
 	pub const NameMaxLength: usize = 32;
-    pub const AppId: u8 = 1;
-}
 
-/// Configure the pallet-qf in pallets/quadratic-funding.
+}
+/// Configure the pallet qf in pallets/quadratic-funding.
 impl pallet_qf::Config for Runtime {
 	type Event = Event;
-	
-	// Use the UnitOfVote from the parameter_types block.
-	type UnitOfVote = VoteUnit;
+	type Currency = pallet_balances::Pallet<Runtime>;
+	type PalletId = QuadraticFundingPalletId;
+	 // Use the UnitOfVote from the parameter_types block.
+	 type UnitOfVote = VoteUnit;
+ 
+	 // Use the MinNickLength from the parameter_types block.
+	 type NumberOfUnitPerVote = NumberOfUnit;
 
-	// Use the MinNickLength from the parameter_types block.
-	type NumberOfUnitPerVote = NumberOfUnit;
-
-	// Use the FeeRatio from the parameter_types block.
-	type FeeRatioPerVote = FeeRatio;
-	
+	 // No action is taken when deposits are forfeited.
+	 type Slashed = ();
+ 
+	 // Use the FeeRatio from the parameter_types block.
+	 type FeeRatioPerVote = FeeRatio;
 	// The minimum length of project name
 	type NameMinLength = NameMinLength;
 
@@ -305,9 +306,6 @@ impl pallet_qf::Config for Runtime {
 
 	// Origin who can control the round
 	type AdminOrigin = EnsureRoot<AccountId>;
-    type DoraUserOrigin = DaoCoreModule;
-    type DoraPay = DaoCoreModule;
-    type AppId = AppId;
 }
 
 parameter_types! {
@@ -351,22 +349,6 @@ impl pallet_moloch_v2::Config for Runtime {
 
 }
 
-parameter_types! {
-	pub const DaoCorePalletId: PalletId = PalletId(*b"py/dcore");
-	pub const TaxPercentNum: u32 = 3;
-	//pub const NameMaxLength: usize = 32;
-}
-
-/// Configure the pallet-qf in pallets/quadratic-funding.
-impl pallet_dao_core::Config for Runtime {
-	type Event = Event;
-	type Call = Call;
-	type Currency = pallet_balances::Pallet<Runtime>;
-	type PalletId = DaoCorePalletId;
-	type TaxInPercent = TaxPercentNum;
-	type SupervisorOrigin = EnsureRoot<AccountId>;
-}
-
 // Create the runtime by composing the FRAME pallets that were previously configured.
 construct_runtime!(
 	pub enum Runtime where
@@ -385,7 +367,6 @@ construct_runtime!(
 		// Include the custom logic from the pallet-qf in the runtime.
 		QuadraticFunding: pallet_qf::{Pallet, Call, Storage, Event<T>},
 		MolochV2Module: pallet_moloch_v2::{Pallet, Call, Storage, Event<T>},
-		DaoCoreModule: pallet_dao_core::{Pallet, Call, Storage, Event<T>},
 	}
 );
 
