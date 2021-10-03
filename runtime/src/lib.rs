@@ -42,7 +42,7 @@ pub use sp_runtime::{Perbill, Permill};
 use frame_system::{EnsureRoot};
 
 /// Import the qudratic-funding pallet.
-pub use pallet_qf;
+pub use pallet_quadratic_funding;
 
 /// Import the moloch-v2 pallet.
 pub use pallet_moloch_v2;
@@ -365,7 +365,7 @@ construct_runtime!(
 		TransactionPayment: pallet_transaction_payment::{Pallet, Storage},
 		Sudo: pallet_sudo::{Pallet, Call, Config<T>, Storage, Event<T>},
 		// Include the custom logic from the pallet-qf in the runtime.
-		QuadraticFunding: pallet_qf::{Pallet, Call, Storage, Event<T>},
+		QuadraticFunding: pallet_quadratic_funding::{Pallet, Call, Storage, Event<T>},
 		MolochV2Module: pallet_moloch_v2::{Pallet, Call, Storage, Event<T>},
 	}
 );
@@ -525,6 +525,16 @@ impl_runtime_apis! {
 			len: u32,
 		) -> pallet_transaction_payment::FeeDetails<Balance> {
 			TransactionPayment::query_fee_details(uxt, len)
+		}
+	}
+
+	// Custom RPC needed
+	impl pallet_quadratic_funding_runtime_api::QuadraticFundingApi<Block, AccountId, Hash> for Runtime {
+		fn vote_cost(who: AccountId, round_id:u32, hash: Hash, ballot: u32) -> u32 {
+			QuadraticFunding::vote_cost(who, round_id, hash, ballot)
+		}
+		fn projects_per_round(round_id:u32) -> Vec<(Hash, u32, u32, u32)> {
+			QuadraticFunding::projects_per_round(round_id)
 		}
 	}
 

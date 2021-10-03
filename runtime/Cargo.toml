@@ -37,7 +37,8 @@ std = [
     'pallet-grandpa/std',
     'pallet-randomness-collective-flip/std',
     'pallet-sudo/std',
-    'pallet-qf/std',
+    'pallet-quadratic-funding/std',
+    'pallet-quadratic-funding-runtime-api/std',
     'pallet-moloch-v2/std',
     'pallet-timestamp/std',
     'pallet-transaction-payment-rpc-runtime-api/std',
@@ -132,10 +133,15 @@ git = 'https://github.com/paritytech/substrate.git'
 tag = 'monthly-2021-09+1'
 version = '4.0.0-dev'
 
-[dependencies.pallet-qf]
+[dependencies.pallet-quadratic-funding]
 default-features = false
 path = '../pallets/quadratic-funding'
 version = '4.0.0-dev'
+
+[dependencies.pallet-quadratic-funding-runtime-api]
+path = "../pallets/quadratic-funding/runtime-api"
+default-features = false
+version = '2.0.1'
 
 [dependencies.pallet-moloch-v2]
 default-features = false
