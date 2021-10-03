@@ -283,7 +283,7 @@ parameter_types! {
 
 }
 /// Configure the pallet qf in pallets/quadratic-funding.
-impl pallet_qf::Config for Runtime {
+impl pallet_quadratic_funding::Config for Runtime {
 	type Event = Event;
 	type Currency = pallet_balances::Pallet<Runtime>;
 	type PalletId = QuadraticFundingPalletId;
@@ -587,7 +587,7 @@ impl_runtime_apis! {
 			add_benchmark!(params, batches, frame_system, SystemBench::<Runtime>);
 			add_benchmark!(params, batches, pallet_balances, Balances);
 			add_benchmark!(params, batches, pallet_timestamp, Timestamp);
-			add_benchmark!(params, batches, pallet_qf, QuadraticFunding);
+			add_benchmark!(params, batches, pallet_quadratic_funding, QuadraticFunding);
 
 			if batches.is_empty() { return Err("Benchmark not found for this pallet.".into()) }
 			Ok(batches)

@@ -1,35 +1,18 @@
 [package]
+name = "pallet-quadratic-funding-runtime-api"
+version = "2.0.1"
 authors = ['Substrate DevHub <https://github.com/substrate-developer-hub>']
-description = 'FRAME pallet quadratic funding'
-edition = '2018'
-homepage = 'https://substrate.dev'
-license = 'Unlicense'
-name = 'pallet-quadratic-funding-runtime-api'
-repository = 'https://github.com/substrate-developer-hub/substrate-node-template/'
-version = '2.0.1'
+edition = "2018"
+license = "GPL-3.0-or-later"
 
-[dependencies.sp-std]
-default-features = false
-git = 'https://github.com/paritytech/substrate.git'
-tag = 'monthly-2021-09+1'
-version = '4.0.0-dev'
+[dependencies]
+sp-api = { version = '4.0.0-dev', git = 'https://github.com/paritytech/substrate.git', tag = 'monthly-2021-09+1', default-features = false}
+codec = { package = "parity-scale-codec", version = "2.0.0", features=['derive'], default-features = false }
+sp-runtime = { version = '4.0.0-dev', git = 'https://github.com/paritytech/substrate.git', tag = 'monthly-2021-09+1', default-features = false}
+sp-std = { version='4.0.0-dev', git = 'https://github.com/paritytech/substrate.git', tag = 'monthly-2021-09+1', default-features = false }
 
-[dependencies.sp-api]
-git = 'https://github.com/paritytech/substrate.git'
-tag = 'monthly-2021-09+1'
-version = '4.0.0-dev'
-
-[dependencies.codec]
-default-features = false
-features = ['derive']
-package = 'parity-scale-codec'
-version = '2.0.0'
-
-[dependencies.sp-runtime]
-default-features = false
-git = 'https://github.com/paritytech/substrate.git'
-tag = 'monthly-2021-09+1'
-version = '4.0.0-dev'
+[dev-dependencies]
+serde_json = "1.0"
 
 [dependencies.pallet-quadratic-funding]
 path='../'
